@@ -14,4 +14,4 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::get('/dashboard', function () {
     return view('pages.users.dashboard');
-})->name('dashboard');
+})->middleware('role:admin')->name('dashboard');
