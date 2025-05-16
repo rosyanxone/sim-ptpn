@@ -23,17 +23,21 @@
     <header class="bg-white shadow-md">
         <div class="container mx-auto flex items-center justify-between px-4 py-4">
             <div class="flex items-center">
-                <img class="h-10 w-auto" src="https://via.placeholder.com/50" alt="Logo">
+                {{-- <img class="h-10 w-auto" src="https://via.placeholder.com/50" alt="Logo"> --}}
                 <span class="ml-3 text-xl font-bold text-green-800">PalmEco</span>
             </div>
-            <nav class="hidden space-x-8 md:flex">
+            <nav class="hidden items-center space-x-8 md:flex">
                 <a class="text-green-700 hover:text-green-500" href="#home">Home</a>
                 <a class="text-green-700 hover:text-green-500" href="#about">About Us</a>
                 <a class="text-green-700 hover:text-green-500" href="#gallery">Gallery</a>
                 <a class="text-green-700 hover:text-green-500" href="#products">Products</a>
                 <a class="text-green-700 hover:text-green-500" href="#contact">Contact</a>
+                <a class="rounded-lg border border-green-600 bg-transparent px-6 py-2 font-bold text-green-700 transition duration-300 hover:bg-green-700 hover:text-white"
+                    href="{{ route('login') }}">
+                    Log In
+                </a>
             </nav>
-            <button class="focus:outline-none md:hidden">
+            <button class="cursor-pointer focus:outline-none md:hidden">
                 <i class="fas fa-bars text-2xl text-green-700"></i>
             </button>
         </div>
@@ -73,6 +77,7 @@
                         <li><a class="hover:text-green-300" href="#about">About Us</a></li>
                         <li><a class="hover:text-green-300" href="#gallery">Gallery</a></li>
                         <li><a class="hover:text-green-300" href="#products">Products</a></li>
+                        <li><a class="hover:text-green-300" href="#contact">Contact</a></li>
                         <li><a class="hover:text-green-300" href="#contact">Contact</a></li>
                     </ul>
                 </div>

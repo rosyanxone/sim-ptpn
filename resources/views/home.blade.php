@@ -309,19 +309,19 @@
                         <div class="mt-6">
                             <h4 class="mb-2 font-bold">Follow Us</h4>
                             <div class="flex space-x-4">
-                                <a class="rounded-full bg-green-600 p-2 text-white transition duration-300 hover:bg-green-700"
+                                <a class="rounded-full bg-green-600 px-3.5 py-2 w-10 h-10 text-white transition duration-300 hover:bg-green-700"
                                     href="#">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
-                                <a class="rounded-full bg-green-600 p-2 text-white transition duration-300 hover:bg-green-700"
+                                <a class="rounded-full bg-green-600 px-3 py-2 w-10 h-10 text-white transition duration-300 hover:bg-green-700"
                                     href="#">
                                     <i class="fab fa-twitter"></i>
                                 </a>
-                                <a class="rounded-full bg-green-600 p-2 text-white transition duration-300 hover:bg-green-700"
+                                <a class="rounded-full bg-green-600 px-3 py-2 w-10 h-10 text-white transition duration-300 hover:bg-green-700"
                                     href="#">
                                     <i class="fab fa-instagram"></i>
                                 </a>
-                                <a class="rounded-full bg-green-600 p-2 text-white transition duration-300 hover:bg-green-700"
+                                <a class="rounded-full bg-green-600 px-3 py-2 w-10 h-10 text-white transition duration-300 hover:bg-green-700"
                                     href="#">
                                     <i class="fab fa-linkedin-in"></i>
                                 </a>
