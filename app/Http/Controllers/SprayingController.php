@@ -12,7 +12,7 @@ class SprayingController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.users.spraying.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class SprayingController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.users.spraying.create');
     }
 
     /**

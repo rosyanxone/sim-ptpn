@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FertilizationController;
+use App\Http\Controllers\PruningController;
+use App\Http\Controllers\SprayingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,22 +17,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login/store', 'loginStore')->name('login.store');
 });
 
-Route::get('/dashboard', function () {
-    return view('pages.users.dashboard');
-})->middleware('role:admin')->name('dashboard');
+Route::middleware(['role:admin'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('pages.users.dashboard');
-})->middleware('role:admin')->name('dashboard');
-
-Route::get('/fertilization', function () {
-    return view('pages.users.fertilization.index');
-});
-
-Route::get('/fertilization/create', function () {
-    return view('pages.users.fertilization.create');
-});
-
-Route::get('/fertilization/edit', function () {
-    return view('pages.users.fertilization.edit');
+    Route::resource('fertilization', FertilizationController::class);
+    Route::resource('spraying', SprayingController::class);
+    Route::resource('prunning', PruningController::class);
+    Route::resource('user', UserController::class);
 });

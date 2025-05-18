@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pruning;
 use Illuminate\Http\Request;
 
-class PruningController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.users.prunning.index');
+        //
     }
 
     /**
@@ -20,7 +19,7 @@ class PruningController extends Controller
      */
     public function create()
     {
-        return view('pages.users.prunning.create');
+        //
     }
 
     /**
@@ -34,7 +33,7 @@ class PruningController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pruning $pruning)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +41,7 @@ class PruningController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pruning $pruning)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +49,7 @@ class PruningController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pruning $pruning)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +57,7 @@ class PruningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pruning $pruning)
+    public function destroy(string $id)
     {
         //
     }
