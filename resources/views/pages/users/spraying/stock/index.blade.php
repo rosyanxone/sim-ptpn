@@ -1,7 +1,7 @@
 @extends('layouts.users')
 
-@section('title', 'Pemupukan')
-@section('header', 'Kelola Pemupukan')
+@section('title', 'Penyemprotan')
+@section('header', 'Kelola Penyemprotan')
 
 @section('styles')
     <style>
@@ -20,49 +20,20 @@
 
 @section('content')
     <div class="rounded-lg bg-white p-6 shadow-md">
-        <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
-            <h2 class="mb-4 text-xl font-semibold text-gray-800 md:mb-0">Daftar Pemupukan</h2>
-        </div>
 
-        <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div class="flex w-full flex-col gap-3 sm:flex-row md:w-auto">
-                <div class="relative">
-                    <input
-                        class="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                        id="search" type="text" placeholder="Cari pemupukan...">
-                    <button class="absolute right-0 top-0 mr-2 mt-2 text-gray-500">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <label class="rounded-md border border-gray-300 pr-2" for="sort-by">
-                    <select
-                        class="w-full rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 md:w-fit"
-                        id="sort-by">
-                        <option value="name-asc">Name (A-Z)</option>
-                        <option value="name-desc">Name (Z-A)</option>
-                        <option value="price-asc">Price (Low to High)</option>
-                        <option value="price-desc">Price (High to Low)</option>
-                        <option value="stock-asc">Stock (Low to High)</option>
-                        <option value="stock-desc">Stock (High to Low)</option>
-                    </select>
-                </label>
+        <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div class="flex flex-col">
+                <a class="mb-3 inline-flex items-center text-sm text-green-600 hover:text-green-800"
+                    href="{{ route('spraying.index') }}">
+                    <i class="fas fa-arrow-left mr-2"></i> Daftar Penyemprotan
+                </a>
+                <h2 class="text-xl font-semibold text-gray-800">Perbarui Pestisida</h2>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
                 <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    href="{{ route('fertilization.create') }}">
-                    <i class="fas fa-plus mr-2"></i> Tambah Pemupukan
+                    href="{{ route('spraying.stock.create') }}">
+                    <i class="fas fa-plus mr-2"></i> Tambah Jenis Pestisida
                 </a>
-                <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 font-semibold text-white transition hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
-                    href="{{ route('fertilization.stock.index') }}">
-                    <i class="fa-solid fa-layer-group mr-2"></i> Perbarui Pupuk
-                </a>
-                <div class="dropdown relative">
-                    <button
-                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        id="exportDropdown">
-                        <i class="fa-solid fa-file-csv mr-2"></i> Export
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -73,30 +44,20 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Tanah
+                                Nama
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Tahun Tanam
+                                Stok
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Jumlah Pemupukan
+                                Tanggal Dibuat
                             </div>
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            scope="col">
-                            <div class="flex items-center">
-                                Tanggal Pemupukan
-                            </div>
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            scope="col">
-                            Diubah Oleh
                         </th>
                         <th></th>
                     </tr>
@@ -104,29 +65,20 @@
                 <tbody class="divide-y divide-gray-200 bg-white">
                     @for ($i = 1; $i <= 10; $i++)
                         <tr>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <div class="text-sm font-medium text-gray-900">
-                                    Blok {{ $i }}
-                                </div>
-                                <div class="text-sm text-gray-500">Afdeling {{ $i }}</div>
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                            <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-500">
                                 20{{ $i === 1 ? '05' : $i * 5 }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 <span class="font-semibold">
                                     {{ 100 + $i * 10 }}
                                 </span>
-                                KG
+                                L
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 {{ date('d M Y', strtotime(fake()->date())) }}
                             </td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                {{ fake()->name() }}
-                            </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                <div class="relative inline-block text-left">
+                                <div class="relative inline-block w-fit text-left">
                                     <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
                                         id="actionBtn{{ $i }}">
                                         <i class="fas fa-ellipsis-v"></i>
