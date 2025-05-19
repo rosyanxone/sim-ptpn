@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('fertilization.store') }}" method="POST" novalidate>
             @csrf
             <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
                 <div class="md:col-span-2">
@@ -53,8 +53,7 @@
                         <div class="relative">
                             <input
                                 class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="planting-year" name="planting_year" type="number" step="0.01" min="0"
-                                required>
+                                id="planting-year" name="planting_year" type="number" step="0.01" min="0" required>
                         </div>
                         @error('planting_year')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -87,13 +86,13 @@
 
                     <!-- Tanggal Pemupukan -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700" for="manufacturing_date">
+                        <label class="mb-1 block text-sm font-medium text-gray-700" for="fertilization-date">
                             Tanggal Pemupukan <span class="text-red-600">*</span>
                         </label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="manufacturing_date" name="manufacturing_date" type="date">
-                        @error('manufacturing_date')
+                            id="fertilization-date" name="fertilization_date" type="date">
+                        @error('fertilization_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
@@ -105,13 +104,14 @@
                         <div class="w-full rounded-md border border-gray-300 pr-2">
                             <select
                                 class="w-full cursor-pointer rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="fertilizer-stock-id" name="fertilizer_stock_id" required>
-                                <option value="">Pilih jenis pupuk...</option>
-                                <option value="NPK">NPK</option>
-                                <option value="Urea">Urea</option>
+                                id="fertilizer-stock-id" name="fertilization_stock_id" required>
+                                <option value="" selected disabled>Pilih jenis pupuk...</option>
+                                @foreach ($fertilizers as $fertilizer)
+                                    <option value="{{ $fertilizer->id }}">{{ $fertilizer->name }}</option>
+                                @endforeach
                             </select>
                         </div>
-                        @error('fertilizer_stock_id')
+                        @error('fertilization_stock_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

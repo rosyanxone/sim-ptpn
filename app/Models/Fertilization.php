@@ -9,4 +9,16 @@ class Fertilization extends Model
 {
     /** @use HasFactory<\Database\Factories\FertilizationFactory> */
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function land()
+    {
+        return $this->belongsTo(Land::class);
+    }
 }

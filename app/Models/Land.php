@@ -9,4 +9,6 @@ class Land extends Model
 {
     /** @use HasFactory<\Database\Factories\LandFactory> */
     use HasFactory;
+
+    protected $guarded = [];
 }

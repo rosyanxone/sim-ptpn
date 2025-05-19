@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lands', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('land_area');
             $table->string('land_location');
             $table->integer('planting_year');
