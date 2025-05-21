@@ -63,28 +63,29 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                    @for ($i = 1; $i <= 10; $i++)
+                    @foreach ($fertilizationStocks as $fertilizationStock)
                         <tr>
                             <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-500">
-                                20{{ $i === 1 ? '05' : $i * 5 }}
+                                {{ $fertilizationStock->name }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 <span class="font-semibold">
-                                    {{ 100 + $i * 10 }}
+                                    {{ $fertilizationStock->amount }}
                                 </span>
                                 KG
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                {{ date('d M Y', strtotime(fake()->date())) }}
+                                {{ date('d M Y', strtotime($fertilizationStock->created_at)) }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                 <div class="relative inline-block w-fit text-left">
                                     <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $i }}">
+                                        id="actionBtn{{ $fertilizationStock->id }}"
+                                        onclick="dropdownActions('{{ $fertilizationStock->id }}')">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
-                                        id="actionMenu{{ $i }}">
+                                        id="actionMenu{{ $fertilizationStock->id }}">
                                         <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
                                             <i class="fas fa-edit mr-2"></i> Edit
                                         </a>
@@ -92,37 +93,19 @@
                                             <i class="fas fa-eye mr-2"></i> View
                                         </a>
                                         <a class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100" href="#"
-                                            onclick="confirmDelete({{ $i }})">
+                                            onclick="confirmDelete({{ $fertilizationStock->id }})">
                                             <i class="fas fa-trash-alt mr-2"></i> Delete
                                         </a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                    @endfor
+                    @endforeach
                 </tbody>
             </table>
         </div>
 
-        <div class="mt-6 flex flex-col items-center justify-between sm:flex-row">
-            <div class="mb-4 text-sm text-gray-500 sm:mb-0">
-                Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span
-                    class="font-medium">24</span> results
-            </div>
-            <div class="flex items-center">
-                <button
-                    class="rounded-md rounded-l-lg bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-                    disabled>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="bg-green-600 px-3 py-1 text-white hover:bg-green-700">1</button>
-                <button class="bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200">2</button>
-                <button class="bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200">3</button>
-                <button class="rounded-md rounded-r-lg bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
+        {{ $fertilizationStocks->links('components.pagination') }}
     </div>
 
     <!-- Delete Confirmation Modal -->
@@ -167,23 +150,62 @@
             </div>
         </div>
     </div>
+
+    @if (session('success'))
+        <div class="fixed inset-0 z-50 overflow-y-auto" id="successModal">
+            <div class="flex min-h-screen items-center justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
+                <div
+                    class="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md sm:align-middle">
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div
+                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <i class="fas fa-check-circle text-xl text-green-600"></i>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                    Sukses!
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+                                        {{ session('success') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const modal = document.getElementById('successModal');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 2000);
+            });
+        </script>
+    @endif
 @endsection
 
 @section('scripts')
     <script>
         // Toggle action dropdowns
-        for (let i = 1; i <= 10; i++) {
-            document.getElementById('actionBtn' + i).addEventListener('click', function(event) {
-                event.stopPropagation();
-                document.getElementById('actionMenu' + i).classList.toggle('show');
+        function dropdownActions(id) {
+            event.stopPropagation();
 
-                // Close other action menus
-                for (let j = 1; j <= 10; j++) {
-                    if (j !== i) {
-                        document.getElementById('actionMenu' + j).classList.remove('show');
-                    }
-                }
+            // Close other action menus
+            document.querySelectorAll('.dropdown-menu').forEach(el => {
+                el.classList.remove('show');
             });
+
+            document.getElementById('actionMenu' + id).classList.toggle('show');
         }
 
         // Delete confirmation modal

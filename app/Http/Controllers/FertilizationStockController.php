@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FertilizationStockRequest;
+use App\Http\Requests\StoreFertilizationStockRequest;
+use App\Models\FertilizationStock;
 use Illuminate\Http\Request;
 
 class FertilizationStockController extends Controller
@@ -11,7 +14,11 @@ class FertilizationStockController extends Controller
      */
     public function index()
     {
-        return view('pages.users.fertilization.stock.index');
+        $fertilizationStocks = FertilizationStock::orderBy('name')->paginate(10);
+
+        return view('pages.users.fertilization.stock.index', [
+            'fertilizationStocks' => $fertilizationStocks,
+        ]);
     }
 
     /**
@@ -25,9 +32,15 @@ class FertilizationStockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFertilizationStockRequest $request)
     {
-        //
+        FertilizationStock::create([
+            'name' => $request->fertilization_name,
+            'amount' => $request->amount,
+        ]);
+
+        session()->flash('success', 'Berhasil menambah stok pemupukan.');
+        return redirect()->route('fertilization.stock.index');
     }
 
     /**

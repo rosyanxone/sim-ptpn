@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('fertilization.stock.store') }}" novalidate method="POST">
             @csrf
             <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
                 <div class="md:col-span-2">
@@ -22,12 +22,13 @@
                 <div class="col-span-1 grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
                     <!-- Nama/Jenis -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700" for="fertilizer-name">Nama/Jenis <span
-                                class="text-red-600">*</span></label>
+                        <label class="mb-1 block text-sm font-medium text-gray-700" for="fertilizer-name">
+                            Nama/Jenis <span class="text-red-600">*</span>
+                        </label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="fertilizer-name" name="fertilizer_name" type="text" required>
-                        @error('fertilizer_name')
+                            id="fertilizer-name" name="fertilization_name" type="text" required>
+                        @error('fertilization_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
@@ -40,12 +41,12 @@
                         <div class="relative">
                             <input
                                 class="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="fertilizer-stock" name="fertilizer_stock" type="number" required>
+                                id="fertilizer-stock" name="amount" type="number" required>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                 <span class="font-medium text-gray-500">KG</span>
                             </div>
                         </div>
-                        @error('fertilizer_stock')
+                        @error('amount')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

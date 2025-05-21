@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class FertilizationStock extends Model
 {
-    //
+    protected $guarded = [];
 }
