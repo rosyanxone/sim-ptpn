@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PesticideStock extends Model
 {
-    //
+    protected $guarded = [];
 }

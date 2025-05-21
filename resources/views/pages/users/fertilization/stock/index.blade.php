@@ -196,6 +196,12 @@
 
 @section('scripts')
     <script>
+        function handleClickOutside(event) {
+            document.querySelectorAll('.dropdown-menu').forEach(el => {
+                el.classList.remove('show');
+            });
+        }
+
         // Toggle action dropdowns
         function dropdownActions(id) {
             event.stopPropagation();

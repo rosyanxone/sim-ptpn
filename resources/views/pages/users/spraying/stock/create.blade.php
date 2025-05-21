@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('spraying.stock.store') }}" novalidate method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
                 <div class="md:col-span-2">
@@ -22,8 +22,8 @@
                 <div class="col-span-1 grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
                     <!-- Nama/Jenis -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700" for="pesticide-name">Nama/Jenis <span
-                                class="text-red-600">*</span></label>
+                        <label class="mb-1 block text-sm font-medium text-gray-700" for="pesticide-name">
+                            Nama/Jenis <spanclass="text-red-600">*</span></label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                             id="pesticide-name" name="pesticide_name" type="text" required>

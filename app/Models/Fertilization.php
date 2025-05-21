@@ -21,4 +21,9 @@ class Fertilization extends Model
     {
         return $this->belongsTo(Land::class);
     }
+
+    public function fertilizer()
+    {
+        return $this->belongsTo(FertilizationStock::class, 'fertilization_stock_id');
+    }
 }

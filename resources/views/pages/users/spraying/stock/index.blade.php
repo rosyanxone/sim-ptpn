@@ -63,28 +63,28 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                    @for ($i = 1; $i <= 10; $i++)
+                    @foreach ($pesticideStocks as $pesticideStock)
                         <tr>
                             <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-500">
-                                20{{ $i === 1 ? '05' : $i * 5 }}
+                                {{ $pesticideStock->name }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 <span class="font-semibold">
-                                    {{ 100 + $i * 10 }}
+                                    {{ $pesticideStock->amount }}
                                 </span>
                                 L
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                {{ date('d M Y', strtotime(fake()->date())) }}
+                                {{ date('d M Y', strtotime($pesticideStock->created_at)) }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                 <div class="relative inline-block w-fit text-left">
                                     <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $i }}">
+                                        id="actionBtn{{ $pesticideStock->id }}" onclick="dropdownActions('{{ $pesticideStock->id }}')">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
-                                        id="actionMenu{{ $i }}">
+                                        id="actionMenu{{ $pesticideStock->id }}">
                                         <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
                                             <i class="fas fa-edit mr-2"></i> Edit
                                         </a>
@@ -92,36 +92,16 @@
                                             <i class="fas fa-eye mr-2"></i> View
                                         </a>
                                         <a class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100" href="#"
-                                            onclick="confirmDelete({{ $i }})">
+                                            onclick="confirmDelete('{{ $pesticideStock->id }}')">
                                             <i class="fas fa-trash-alt mr-2"></i> Delete
                                         </a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                    @endfor
+                    @endforeach
                 </tbody>
             </table>
-        </div>
-
-        <div class="mt-6 flex flex-col items-center justify-between sm:flex-row">
-            <div class="mb-4 text-sm text-gray-500 sm:mb-0">
-                Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span
-                    class="font-medium">24</span> results
-            </div>
-            <div class="flex items-center">
-                <button
-                    class="rounded-md rounded-l-lg bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-                    disabled>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="bg-green-600 px-3 py-1 text-white hover:bg-green-700">1</button>
-                <button class="bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200">2</button>
-                <button class="bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200">3</button>
-                <button class="rounded-md rounded-r-lg bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -167,23 +147,31 @@
             </div>
         </div>
     </div>
+
+    @include('components.success-popup')
 @endsection
 
 @section('scripts')
     <script>
-        // Toggle action dropdowns
-        for (let i = 1; i <= 10; i++) {
-            document.getElementById('actionBtn' + i).addEventListener('click', function(event) {
-                event.stopPropagation();
-                document.getElementById('actionMenu' + i).classList.toggle('show');
-
-                // Close other action menus
-                for (let j = 1; j <= 10; j++) {
-                    if (j !== i) {
-                        document.getElementById('actionMenu' + j).classList.remove('show');
-                    }
-                }
+        function handleClickOutside(event) {
+            document.querySelectorAll('.dropdown-menu').forEach(el => {
+                el.classList.remove('show');
             });
+        }
+
+        // Add event listener
+        document.addEventListener('click', handleClickOutside);
+
+        // Toggle action dropdowns
+        function dropdownActions(id) {
+            event.stopPropagation();
+
+            // Close other action menus
+            document.querySelectorAll('.dropdown-menu').forEach(el => {
+                el.classList.remove('show');
+            });
+
+            document.getElementById('actionMenu' + id).classList.toggle('show');
         }
 
         // Delete confirmation modal

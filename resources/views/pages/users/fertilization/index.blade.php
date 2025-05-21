@@ -117,9 +117,11 @@
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 <span class="font-semibold">
-                                    {{ $fertilization->amount_fertilized }}
+                                    {{ $fertilization->amount_fertilized }} KG
                                 </span>
-                                KG
+                                <div class="text-sm text-gray-500">
+                                    {{ $fertilization->fertilizer->name }}
+                                </div>
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 {{ date('d M Y', strtotime($fertilization->fertilization_date)) }}
@@ -246,6 +248,12 @@
 
 @section('scripts')
     <script>
+        function handleClickOutside(event) {
+            document.querySelectorAll('.dropdown-menu').forEach(el => {
+                el.classList.remove('show');
+            });
+        }
+
         // Toggle action dropdowns
         function dropdownActions(id) {
             event.stopPropagation();

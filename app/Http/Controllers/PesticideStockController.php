@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePesticideStockRequest;
+use App\Models\PesticideStock;
 use Illuminate\Http\Request;
 
 class PesticideStockController extends Controller
@@ -11,7 +13,11 @@ class PesticideStockController extends Controller
      */
     public function index()
     {
-        return view('pages.users.spraying.stock.index');
+        $pesticideStocks = PesticideStock::orderBy('name')->get();
+
+        return view('pages.users.spraying.stock.index', [
+            'pesticideStocks' => $pesticideStocks,
+        ]);
     }
 
     /**
@@ -25,9 +31,15 @@ class PesticideStockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePesticideStockRequest $request)
     {
-        //
+        PesticideStock::create([
+            'name' => $request->pesticide_name,
+            'amount' => $request->pesticide_stock,
+        ]);
+
+        session()->flash('success', 'Berhasil menambah stok pestisida.');
+        return redirect()->route('spraying.stock.index');
     }
 
     /**
