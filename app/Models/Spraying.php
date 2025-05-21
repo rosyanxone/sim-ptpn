@@ -9,4 +9,6 @@ class Spraying extends Model
 {
     /** @use HasFactory<\Database\Factories\SprayingFactory> */
     use HasFactory;
+
+    protected $guarded = [];
 }

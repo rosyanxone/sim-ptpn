@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('spraying.store') }}" method="POST" novalidate>
             @csrf
             <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
                 <div class="md:col-span-2">
@@ -69,31 +69,31 @@
                 <div class="col-span-1 grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
                     <!-- Jumlah Penyemprotan -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700" for="amount-fertilized">
+                        <label class="mb-1 block text-sm font-medium text-gray-700" for="amount-spraying">
                             Jumlah Penyemprotan <span class="text-red-600">*</span>
                         </label>
                         <div class="relative">
                             <input
                                 class="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="amount-fertilized" name="amount_fertilized" type="number" required>
+                                id="amount-spraying" name="amount_spraying" type="number" required>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                 <span class="font-medium text-gray-500">L</span>
                             </div>
                         </div>
-                        @error('amount_fertilized')
+                        @error('amount_spraying')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Tanggal Penyemprotan -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700" for="manufacturing_date">
+                        <label class="mb-1 block text-sm font-medium text-gray-700" for="spraying-date">
                             Tanggal Penyemprotan <span class="text-red-600">*</span>
                         </label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="manufacturing_date" name="manufacturing_date" type="date">
-                        @error('manufacturing_date')
+                            id="spraying-date" name="spraying_date" type="date">
+                        @error('spraying_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
@@ -106,9 +106,10 @@
                             <select
                                 class="w-full cursor-pointer rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 id="pesticide-stock-id" name="pesticide_stock_id" required>
-                                <option value="">Pilih jenis pestisida...</option>
-                                <option value="NPK">NPK</option>
-                                <option value="Urea">Urea</option>
+                                <option value="" selected disabled>Pilih jenis pestisida...</option>
+                                @foreach ($pesticideStocks as $pesticideStock)
+                                    <option value="{{ $pesticideStock->id }}">{{ $pesticideStock->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         @error('pesticide_stock_id')

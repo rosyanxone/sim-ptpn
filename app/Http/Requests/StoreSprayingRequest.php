@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFertilizationRequest extends FormRequest
+class StoreSprayingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class StoreFertilizationRequest extends FormRequest
             'land_area' => ['required', 'string', 'max:255'],
             'land_location' => ['required', 'string', 'max:255'],
             'planting_year' => ['required', 'digits:4', 'integer', 'min:1900', 'max:' . date('Y')],
-            'amount_fertilized' => ['required', 'numeric', 'min:0'],
-            'fertilization_date' => ['required', 'date'],
-            'fertilization_stock_id' => ['required', 'string', 'max:100'],
+            'amount_spraying' => ['required', 'numeric', 'min:0'],
+            'spraying_date' => ['required', 'date'],
+            'pesticide_stock_id' => ['required', 'string', 'max:100'],
         ];
     }
 
@@ -37,8 +37,8 @@ class StoreFertilizationRequest extends FormRequest
             'land_area.required' => 'Luas lahan wajib diisi.',
             'land_location.required' => 'Lokasi lahan wajib diisi.',
             'planting_year.digits' => 'Tahun tanam harus terdiri dari 4 digit.',
-            'amount_fertilized.numeric' => 'Jumlah pupuk harus berupa angka.',
-            'fertilization_date.date' => 'Tanggal pemupukkan harus berupa tanggal yang valid.',
+            'amount_spraying.numeric' => 'Jumlah penyemprotan harus berupa angka.',
+            'spraying_date.date' => 'Tanggal penyemprotan harus berupa tanggal yang valid.',
         ];
     }
 }
