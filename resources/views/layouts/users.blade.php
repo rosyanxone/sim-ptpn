@@ -49,12 +49,12 @@
                         </a>
                         <a class="{{ request()->routeIs('prunning*') ? 'sidebar-active' : '' }} flex items-center rounded-md px-4 py-2 text-white hover:bg-green-700"
                             href="{{ route('prunning.index') }}">
-                            <i class="fas fa-users mr-3"></i>
+                            <i class="fa-solid fa-tree mr-3"></i>
                             Pembabatan
                         </a>
                         <a class="{{ request()->routeIs('user*') ? 'sidebar-active' : '' }} flex items-center rounded-md px-4 py-2 text-white hover:bg-green-700"
                             href="{{ route('user.index') }}">
-                            <i class="fas fa-images mr-3"></i>
+                            <i class="fas fa-users mr-3"></i>
                             User
                         </a>
                     </nav>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Land;
 use App\Models\Pruning;
+use DB;
 use Illuminate\Http\Request;
 
 class PruningController extends Controller
@@ -12,7 +14,7 @@ class PruningController extends Controller
      */
     public function index()
     {
-        $prunnings = Pruning::orderBy(request()->get('sortBy') ?? 'spraying_date')
+        $prunnings = Pruning::orderBy(request()->get('sortBy') ?? 'prunning_date')
             ->whereHas('land', function ($q) {
                 if (request()->get('search')) {
                     $q->where('land_area', 'LIKE', '%' . request()->get('search') . '%')
@@ -38,7 +40,26 @@ class PruningController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $land = Land::create($request->only(['land_area', 'land_location', 'planting_year']));
+
+            Pruning::create($request->only([
+                'prunning_amount',
+                'prunning_date',
+                'prunning_area'
+            ]) + [
+                'land_id' => $land->id,
+                'user_id' => auth()->user()->id
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        session()->flash('success', 'Berhasil menambah pembabatan.');
+        return redirect()->route('prunning.index');
     }
 
     /**
@@ -52,24 +73,49 @@ class PruningController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pruning $pruning)
+    public function edit(Pruning $prunning)
     {
-        //
+        return view('pages.users.prunning.edit', [
+            'prunning' => $prunning
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pruning $pruning)
+    public function update(Request $request, Pruning $prunning)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $prunning->land()->update(
+                $request->only(['land_area', 'land_location', 'planting_year'])
+            );
+
+            $prunning->update($request->only([
+                'prunning_area',
+                'prunning_date',
+                'prunning_amount'
+            ]) + [
+                'user_id' => auth()->user()->id
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        session()->flash('success', 'Berhasil memperbarui pembabatan.');
+        return redirect()->route('prunning.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pruning $pruning)
+    public function destroy(Pruning $prunning)
     {
-        //
+        $prunning->delete();
+
+        session()->flash('success', 'Berhasil menghapus pembabatan.');
+        return redirect()->route('prunning.index');
     }
 }

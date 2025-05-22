@@ -1,7 +1,7 @@
 @extends('layouts.users')
 
-@section('title', 'Pembabatan')
-@section('header', 'Kelola Pembabatan')
+@section('title', 'User')
+@section('header', 'Kelola User')
 
 @section('styles')
     <style>
@@ -21,17 +21,16 @@
 @section('content')
     <div class="rounded-lg bg-white p-6 shadow-md">
         <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
-            <h2 class="mb-4 text-xl font-semibold text-gray-800 md:mb-0">Daftar Pembabatan</h2>
+            <h2 class="mb-4 text-xl font-semibold text-gray-800 md:mb-0">Daftar User</h2>
         </div>
 
         <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <form class="flex w-full flex-col gap-3 sm:flex-row md:w-auto" action="{{ route('prunning.index') }}"
-                method="GET">
+            <form class="flex w-full flex-col gap-3 sm:flex-row md:w-auto" action="{{ route('user.index') }}" method="GET">
                 <div class="relative">
                     <input
                         class="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                         id="search" name="search" type="text" value="{{ request()->get('search') }}"
-                        placeholder="Cari pembabatan...">
+                        placeholder="Cari user...">
                     <button class="absolute right-0 top-0 mr-2 mt-2 text-gray-500">
                         <i class="fas fa-search"></i>
                     </button>
@@ -40,30 +39,23 @@
                     <select
                         class="w-full rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 md:w-fit"
                         id="sort-by" name="sortBy" onchange="this.form.submit()">
-                        <option value="prunning_area" @selected(request()->get('sortBy') == 'prunning_area')>
-                            Area Pembabatan
+                        <option value="name" @selected(request()->get('sortBy') == 'name')>
+                            Nama User
                         </option>
-                        <option value="prunning_amount" @selected(request()->get('sortBy') == 'prunning_amount')>
-                            Jumlah Pembabatan
+                        <option value="email" @selected(request()->get('sortBy') == 'email')>
+                            Nama Email
                         </option>
-                        <option value="prunning_date" @selected(request()->get('sortBy') == 'prunning_date')>
-                            Tanggal Pembabatan
+                        <option value="created_at" @selected(request()->get('sortBy') == 'created_at')>
+                            Tanggal Dibuat
                         </option>
                     </select>
                 </label>
             </form>
             <div class="flex flex-col gap-3 sm:flex-row">
                 <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    href="{{ route('prunning.create') }}">
-                    <i class="fas fa-plus mr-2"></i> Tambah Pembabatan
+                    href="{{ route('user.create') }}">
+                    <i class="fas fa-plus mr-2"></i> Tambah User
                 </a>
-                <div class="dropdown relative">
-                    <button
-                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        id="exportDropdown">
-                        <i class="fa-solid fa-file-csv mr-2"></i> Export
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -74,82 +66,60 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Tanah
+                                Nama
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Area Pembabatan
+                                Email
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Tahun Tanam
+                                Role
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                             scope="col">
                             <div class="flex items-center">
-                                Jumlah Pembabatan
+                                Tanggal Dibuat
                             </div>
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            scope="col">
-                            <div class="flex items-center">
-                                Tanggal Pembabatan
-                            </div>
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            scope="col">
-                            Diubah Oleh
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                    @foreach ($prunnings as $prunning)
+                    @foreach ($users as $user)
                         <tr>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <div class="text-sm font-medium text-gray-900">
-                                    {{ $prunning->land->land_area }}
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    {{ $prunning->land->land_location }}
-                                </div>
+                            <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                {{ $user->name }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                {{ $prunning->prunning_area }}
+                                {{ $user->email }}
                             </td>
-                            <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                {{ $prunning->land->planting_year }}
+                            <td class="whitespace-nowrap capitalize px-6 py-4 text-sm text-gray-500">
+                                {{ $user->roles->first()->name }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 <span class="font-semibold">
-                                    {{ $prunning->prunning_amount }}
+                                    {{ date('d F Y', strtotime($user->created_at)) }}
                                 </span>
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                {{ date('d M Y', strtotime($prunning->prunning_date)) }}
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                {{ $prunning->user->name }}
                             </td>
                             <td class="whitespace-nowrap text-right text-sm font-medium">
                                 <div class="relative inline-block text-left">
                                     <button class="px-6 py-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $prunning->id }}" onclick="dropdownActions('{{ $prunning->id }}')">
+                                        id="actionBtn{{ $user->id }}" onclick="dropdownActions('{{ $user->id }}')">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
-                                        id="actionMenu{{ $prunning->id }}">
+                                        id="actionMenu{{ $user->id }}">
                                         <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="{{ route('prunning.edit', ['prunning' => $prunning->id]) }}">
+                                            href="{{ route('user.edit', ['user' => $user->id]) }}">
                                             <i class="fas fa-edit mr-2"></i> Edit
                                         </a>
-                                        <form action="{{ route('prunning.destroy', ['prunning' => $prunning->id]) }}"
-                                            method="POST">
+                                        <form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button
@@ -167,7 +137,7 @@
             </table>
         </div>
 
-        {{ $prunnings->links('components.pagination') }}
+        {{ $users->links('components.pagination') }}
     </div>
 
     @include('components.delete-confirmation-popup')
