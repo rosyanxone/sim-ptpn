@@ -14,7 +14,7 @@ class FertilizationStockController extends Controller
      */
     public function index()
     {
-        $fertilizationStocks = FertilizationStock::orderBy('name')->paginate(10);
+        $fertilizationStocks = FertilizationStock::orderBy('name')->get();
 
         return view('pages.users.fertilization.stock.index', [
             'fertilizationStocks' => $fertilizationStocks,
@@ -70,8 +70,16 @@ class FertilizationStockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(FertilizationStock $stock)
     {
-        //
+        try {
+            $stock->delete();
+
+            session()->flash('success', 'Berhasil menghapus stok pestisida.');
+            return redirect()->route('fertilization.stock.index');
+        } catch (\Throwable $th) {
+            session()->flash('success', 'Gagal menghapus stok pestisida.');
+            return redirect()->route('fertilization.stock.index');
+        }
     }
 }

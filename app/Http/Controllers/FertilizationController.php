@@ -17,7 +17,15 @@ class FertilizationController extends Controller
      */
     public function index()
     {
-        $fertilizations = Fertilization::orderBy('fertilization_date')->paginate(10);
+        $fertilizations = Fertilization::orderBy(request()->get('sortBy') ?? 'fertilization_date')
+            ->whereHas('land', function ($q) {
+                if (request()->get('search')) {
+                    $q->where('land_area', 'LIKE', '%' . request()->get('search') . '%')
+                        ->orWhere('land_location', 'LIKE', '%' . request()->get('search') . '%');
+                }
+            })->with('fertilizer', function ($q) {
+                $q->withTrashed();
+            })->paginate(10);
 
         $window = UrlWindow::make($fertilizations);
 
@@ -87,7 +95,12 @@ class FertilizationController extends Controller
      */
     public function edit(Fertilization $fertilization)
     {
-        //
+        $fertilizers = FertilizationStock::orderBy('name')->get();
+
+        return view('pages.users.fertilization.edit', [
+            'fertilization' => $fertilization,
+            'fertilizers' => $fertilizers,
+        ]);
     }
 
     /**
@@ -95,7 +108,27 @@ class FertilizationController extends Controller
      */
     public function update(Request $request, Fertilization $fertilization)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $fertilization->land()->update(
+                $request->only(['land_area', 'land_location', 'planting_year'])
+            );
+
+            $fertilization->update($request->only([
+                'amount_fertilized',
+                'fertilization_date',
+                'fertilization_stock_id'
+            ]) + [
+                'user_id' => auth()->user()->id
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        session()->flash('success', 'Berhasil mengubah pemupukan.');
+        return redirect()->route('fertilization.index');
     }
 
     /**
@@ -103,6 +136,9 @@ class FertilizationController extends Controller
      */
     public function destroy(Fertilization $fertilization)
     {
-        //
+        $fertilization->delete();
+
+        session()->flash('success', 'Berhasil menghapus pemupukan.');
+        return redirect()->route('fertilization.index');
     }
 }

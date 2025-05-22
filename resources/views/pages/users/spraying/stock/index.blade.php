@@ -80,21 +80,23 @@
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                 <div class="relative inline-block w-fit text-left">
                                     <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $pesticideStock->id }}" onclick="dropdownActions('{{ $pesticideStock->id }}')">
+                                        id="actionBtn{{ $pesticideStock->id }}"
+                                        onclick="dropdownActions('{{ $pesticideStock->id }}')">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
                                         id="actionMenu{{ $pesticideStock->id }}">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
-                                            <i class="fas fa-edit mr-2"></i> Edit
-                                        </a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
-                                            <i class="fas fa-eye mr-2"></i> View
-                                        </a>
-                                        <a class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100" href="#"
-                                            onclick="confirmDelete('{{ $pesticideStock->id }}')">
-                                            <i class="fas fa-trash-alt mr-2"></i> Delete
-                                        </a>
+                                        <form
+                                            action="{{ route('spraying.stock.destroy', ['stock' => $pesticideStock->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
+                                                type="submit">
+                                                <i class="fas fa-trash-alt mr-2"></i> Delete
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>

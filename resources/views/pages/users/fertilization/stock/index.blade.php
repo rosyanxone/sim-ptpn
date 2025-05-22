@@ -86,16 +86,17 @@
                                     </button>
                                     <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
                                         id="actionMenu{{ $fertilizationStock->id }}">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
-                                            <i class="fas fa-edit mr-2"></i> Edit
-                                        </a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
-                                            <i class="fas fa-eye mr-2"></i> View
-                                        </a>
-                                        <a class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100" href="#"
-                                            onclick="confirmDelete({{ $fertilizationStock->id }})">
-                                            <i class="fas fa-trash-alt mr-2"></i> Delete
-                                        </a>
+                                        <form
+                                            action="{{ route('fertilization.stock.destroy', ['stock' => $fertilizationStock->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
+                                                type="submit">
+                                                <i class="fas fa-trash-alt mr-2"></i> Delete
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
@@ -104,8 +105,6 @@
                 </tbody>
             </table>
         </div>
-
-        {{ $fertilizationStocks->links('components.pagination') }}
     </div>
 
     <!-- Delete Confirmation Modal -->
@@ -151,47 +150,7 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <div class="fixed inset-0 z-50 overflow-y-auto" id="successModal">
-            <div class="flex min-h-screen items-center justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-                <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
-                <div
-                    class="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md sm:align-middle">
-                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div
-                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <i class="fas fa-check-circle text-xl text-green-600"></i>
-                            </div>
-                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">
-                                    Sukses!
-                                </h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500">
-                                        {{ session('success') }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const modal = document.getElementById('successModal');
-
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 2000);
-            });
-        </script>
-    @endif
+    @include('components.success-popup')
 @endsection
 
 @section('scripts')
@@ -201,6 +160,9 @@
                 el.classList.remove('show');
             });
         }
+
+        // Add event listener
+        document.addEventListener('click', handleClickOutside);
 
         // Toggle action dropdowns
         function dropdownActions(id) {

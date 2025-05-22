@@ -69,8 +69,16 @@ class PesticideStockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(PesticideStock $stock)
     {
-        //
+        try {
+            $stock->delete();
+            
+            session()->flash('success', 'Berhasil menghapus stok pestisida.');
+            return redirect()->route('spraying.stock.index');
+        } catch (\Throwable $th) {
+            session()->flash('success', 'Gagal menghapus stok pestisida.');
+            return redirect()->route('spraying.stock.index');
+        }
     }
 }

@@ -16,7 +16,15 @@ class SprayingController extends Controller
      */
     public function index()
     {
-        $sprayings = Spraying::orderBy('spraying_date')->paginate(10);
+        $sprayings = Spraying::orderBy(request()->get('sortBy') ?? 'spraying_date')
+            ->whereHas('land', function ($q) {
+                if (request()->get('search')) {
+                    $q->where('land_area', 'LIKE', '%' . request()->get('search') . '%')
+                        ->orWhere('land_location', 'LIKE', '%' . request()->get('search') . '%');
+                }
+            })->with('pesticide', function ($q) {
+                $q->withTrashed();
+            })->paginate(10);
 
         return view('pages.users.spraying.index', [
             'sprayings' => $sprayings,
@@ -75,7 +83,12 @@ class SprayingController extends Controller
      */
     public function edit(Spraying $spraying)
     {
-        //
+        $pesticideStocks = PesticideStock::orderBy('name')->get();
+
+        return view('pages.users.spraying.edit', [
+            'pesticideStocks' => $pesticideStocks,
+            'spraying' => $spraying,
+        ]);
     }
 
     /**
@@ -83,7 +96,27 @@ class SprayingController extends Controller
      */
     public function update(Request $request, Spraying $spraying)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $spraying->land()->update(
+                $request->only(['land_area', 'land_location', 'planting_year'])
+            );
+
+            $spraying->update($request->only([
+                'amount_spraying',
+                'spraying_date',
+                'pesticide_stock_id'
+            ]) + [
+                'user_id' => auth()->user()->id
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        session()->flash('success', 'Berhasil memperbarui penyemprotan.');
+        return redirect()->route('spraying.index');
     }
 
     /**
@@ -91,6 +124,9 @@ class SprayingController extends Controller
      */
     public function destroy(Spraying $spraying)
     {
-        //
+        $spraying->delete();
+
+        session()->flash('success', 'Berhasil menghapus penyemprotan.');
+        return redirect()->route('spraying.index');
     }
 }
