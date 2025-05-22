@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SprayingExport;
 use App\Http\Requests\StoreSprayingRequest;
 use App\Models\Land;
 use App\Models\PesticideStock;
 use App\Models\Spraying;
 use DB;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SprayingController extends Controller
 {
@@ -128,5 +130,10 @@ class SprayingController extends Controller
 
         session()->flash('success', 'Berhasil menghapus penyemprotan.');
         return redirect()->route('spraying.index');
+    }
+
+    public function exportSpraying()
+    {
+        return Excel::download(new SprayingExport(), 'Data Penyemprotan.xlsx');
     }
 }

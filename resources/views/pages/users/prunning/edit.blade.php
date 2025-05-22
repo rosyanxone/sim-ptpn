@@ -28,7 +28,8 @@
                         </label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="land-area" name="land_area" value="{{ $prunning->land->land_area }}" type="text" required>
+                            id="land-area" name="land_area" type="text" value="{{ $prunning->land->land_area }}"
+                            required>
                         @error('land_area')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -41,8 +42,8 @@
                         </label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="land-location" name="land_location" value="{{ $prunning->land->land_location }}" type="text"
-                            required>
+                            id="land-location" name="land_location" type="text"
+                            value="{{ $prunning->land->land_location }}" required>
                         @error('land_location')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -77,9 +78,12 @@
                         </label>
                         <div class="relative">
                             <input
-                                class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="prunning-amount" name="prunning_amount" value="{{ $prunning->prunning_amount }}"
-                                type="text" required>
+                                class="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                id="prunning-amount" name="prunning_amount" type="number"
+                                value="{{ $prunning->prunning_amount }}" required>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="font-medium text-gray-500">Ha</span>
+                            </div>
                         </div>
                         @error('prunning_amount')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -93,8 +97,8 @@
                         </label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="prunning-date" name="prunning_date"
-                            value="{{ date('Y-m-d', strtotime($prunning->prunning_date)) }}" type="date">
+                            id="prunning-date" name="prunning_date" type="date"
+                            value="{{ date('Y-m-d', strtotime($prunning->prunning_date)) }}">
                         @error('prunning_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -108,8 +112,8 @@
                         <div class="relative">
                             <input
                                 class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="prunning-area" name="prunning_area" value="{{ $prunning->prunning_area }}" type="text"
-                                required>
+                                id="prunning-area" name="prunning_area" type="text"
+                                value="{{ $prunning->prunning_area }}" required>
                         </div>
                         @error('prunning_area')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

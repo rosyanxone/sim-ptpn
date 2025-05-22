@@ -32,7 +32,8 @@
                 <div class="relative">
                     <input
                         class="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                        id="search" name="search" type="text" placeholder="Cari penyemprotan..." value="{{ request()->get('search') }}">
+                        id="search" name="search" type="text" value="{{ request()->get('search') }}"
+                        placeholder="Cari penyemprotan...">
                     <button class="absolute right-0 top-0 mr-2 mt-2 text-gray-500">
                         <i class="fas fa-search"></i>
                     </button>
@@ -56,11 +57,10 @@
                     <i class="fa-solid fa-layer-group mr-2"></i> Perbarui Pestisida
                 </a>
                 <div class="dropdown relative">
-                    <button
-                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        id="exportDropdown">
+                    <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                        id="exportDropdown" href="{{ route('spraying.export') }}">
                         <i class="fa-solid fa-file-csv mr-2"></i> Export
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                {{  $spraying->land ? $spraying->land->planting_year : '' }}
+                                {{ $spraying->land ? $spraying->land->planting_year : '' }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                 <span class="font-semibold">

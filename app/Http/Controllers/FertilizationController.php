@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\FertilizationExport;
 use App\Http\Requests\StoreFertilizationRequest;
 use App\Models\Fertilization;
 use App\Models\FertilizationStock;
@@ -9,6 +10,7 @@ use App\Models\Land;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\UrlWindow;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FertilizationController extends Controller
 {
@@ -140,5 +142,10 @@ class FertilizationController extends Controller
 
         session()->flash('success', 'Berhasil menghapus pemupukan.');
         return redirect()->route('fertilization.index');
+    }
+
+    public function exportFertilization()
+    {
+        return Excel::download(new FertilizationExport(), 'Data Pemupukan.xlsx');
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PruningExport;
 use App\Models\Land;
 use App\Models\Pruning;
 use DB;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PruningController extends Controller
 {
@@ -117,5 +119,10 @@ class PruningController extends Controller
 
         session()->flash('success', 'Berhasil menghapus pembabatan.');
         return redirect()->route('prunning.index');
+    }
+
+    public function exportPruning()
+    {
+        return Excel::download(new PruningExport(), 'Data Pembabatan.xlsx');
     }
 }

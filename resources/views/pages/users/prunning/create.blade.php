@@ -74,8 +74,11 @@
                         </label>
                         <div class="relative">
                             <input
-                                class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                id="prunning-amount" name="prunning_amount" type="text" required>
+                                class="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                id="prunning-amount" name="prunning_amount" type="number" required>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="font-medium text-gray-500">Ha</span>
+                            </div>
                         </div>
                         @error('prunning_amount')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

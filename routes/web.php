@@ -42,6 +42,10 @@ Route::middleware(['role:admin'])->group(function () {
         Route::delete('/{stock}', [PesticideStockController::class, 'destroy'])->name('destroy');
     });
 
+    Route::get('/fertilization/export', [FertilizationController::class, 'exportFertilization'])->name('fertilization.export');
+    Route::get('/spraying/export', [SprayingController::class, 'exportSpraying'])->name('spraying.export');
+    Route::get('/prunning/export', [PruningController::class, 'exportPruning'])->name('prunning.export');
+
     Route::resource('fertilization', FertilizationController::class);
     Route::resource('spraying', SprayingController::class);
     Route::resource('prunning', PruningController::class);

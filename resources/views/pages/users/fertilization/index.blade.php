@@ -55,11 +55,11 @@
                     <i class="fa-solid fa-layer-group mr-2"></i> Perbarui Pupuk
                 </a>
                 <div class="dropdown relative">
-                    <button
+                    <a href="{{ route('fertilization.export') }}"
                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                         id="exportDropdown">
                         <i class="fa-solid fa-file-csv mr-2"></i> Export
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
