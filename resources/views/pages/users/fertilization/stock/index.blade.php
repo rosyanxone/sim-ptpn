@@ -29,12 +29,14 @@
                 </a>
                 <h2 class="text-xl font-semibold text-gray-800">Perbarui Pemupukan</h2>
             </div>
-            <div class="flex flex-col gap-3 sm:flex-row">
-                <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    href="{{ route('fertilization.stock.create') }}">
-                    <i class="fas fa-plus mr-2"></i> Tambah Jenis Pupuk
-                </a>
-            </div>
+            @role('admin|krani')
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        href="{{ route('fertilization.stock.create') }}">
+                        <i class="fas fa-plus mr-2"></i> Tambah Jenis Pupuk
+                    </a>
+                </div>
+            @endrole
         </div>
 
         <div class="overflow-x-auto">
@@ -78,27 +80,29 @@
                                 {{ date('d M Y', strtotime($fertilizationStock->created_at)) }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                <div class="relative inline-block w-fit text-left">
-                                    <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $fertilizationStock->id }}"
-                                        onclick="dropdownActions('{{ $fertilizationStock->id }}')">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
-                                        id="actionMenu{{ $fertilizationStock->id }}">
-                                        <form
-                                            action="{{ route('fertilization.stock.destroy', ['stock' => $fertilizationStock->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button
-                                                class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
-                                                type="submit">
-                                                <i class="fas fa-trash-alt mr-2"></i> Delete
-                                            </button>
-                                        </form>
+                                @role('admin|krani')
+                                    <div class="relative inline-block w-fit text-left">
+                                        <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                                            id="actionBtn{{ $fertilizationStock->id }}"
+                                            onclick="dropdownActions('{{ $fertilizationStock->id }}')">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
+                                            id="actionMenu{{ $fertilizationStock->id }}">
+                                            <form
+                                                action="{{ route('fertilization.stock.destroy', ['stock' => $fertilizationStock->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
+                                                    type="submit">
+                                                    <i class="fas fa-trash-alt mr-2"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach

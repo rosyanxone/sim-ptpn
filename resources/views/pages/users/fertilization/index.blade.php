@@ -46,10 +46,12 @@
                 </label>
             </form>
             <div class="flex flex-col gap-3 sm:flex-row">
-                <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    href="{{ route('fertilization.create') }}">
-                    <i class="fas fa-plus mr-2"></i> Tambah Pemupukan
-                </a>
+                @role('admin|krani')
+                    <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        href="{{ route('fertilization.create') }}">
+                        <i class="fas fa-plus mr-2"></i> Tambah Pemupukan
+                    </a>
+                @endrole
                 <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 font-semibold text-white transition hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                     href="{{ route('fertilization.stock.index') }}">
                     <i class="fa-solid fa-layer-group mr-2"></i> Perbarui Pupuk
@@ -128,31 +130,33 @@
                                 {{ $fertilization->user->name }}
                             </td>
                             <td class="whitespace-nowrap text-right text-sm font-medium">
-                                <div class="relative inline-block text-left">
-                                    <button class="px-6 py-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $fertilization->id }}"
-                                        onclick="dropdownActions('{{ $fertilization->id }}')">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
-                                        id="actionMenu{{ $fertilization->id }}">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="{{ route('fertilization.edit', ['fertilization' => $fertilization->id]) }}">
-                                            <i class="fas fa-edit mr-2"></i> Edit
-                                        </a>
-                                        <form
-                                            action="{{ route('fertilization.destroy', ['fertilization' => $fertilization->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button
-                                                class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
-                                                type="submit">
-                                                <i class="fas fa-trash-alt mr-2"></i> Delete
-                                            </button>
-                                        </form>
+                                @role('admin|krani')
+                                    <div class="relative inline-block text-left">
+                                        <button class="px-6 py-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                            id="actionBtn{{ $fertilization->id }}"
+                                            onclick="dropdownActions('{{ $fertilization->id }}')">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
+                                            id="actionMenu{{ $fertilization->id }}">
+                                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                href="{{ route('fertilization.edit', ['fertilization' => $fertilization->id]) }}">
+                                                <i class="fas fa-edit mr-2"></i> Edit
+                                            </a>
+                                            <form
+                                                action="{{ route('fertilization.destroy', ['fertilization' => $fertilization->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
+                                                    type="submit">
+                                                    <i class="fas fa-trash-alt mr-2"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach

@@ -52,18 +52,20 @@
                             <i class="fa-solid fa-tree mr-3"></i>
                             Pembabatan
                         </a>
-                        <a class="{{ request()->routeIs('user*') ? 'sidebar-active' : '' }} flex items-center rounded-md px-4 py-2 text-white hover:bg-green-700"
-                            href="{{ route('user.index') }}">
-                            <i class="fas fa-users mr-3"></i>
-                            User
-                        </a>
+                        @role('admin')
+                            <a class="{{ request()->routeIs('user*') ? 'sidebar-active' : '' }} flex items-center rounded-md px-4 py-2 text-white hover:bg-green-700"
+                                href="{{ route('user.index') }}">
+                                <i class="fas fa-users mr-3"></i>
+                                User
+                            </a>
+                        @endrole
                     </nav>
                     <div class="border-t border-green-700 p-4">
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
                                 <div class="flex items-center">
-                                    <form method="POST" action="#">
+                                    <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button class="text-xs text-green-300 hover:text-white"
                                             type="submit">Logout</button>
@@ -133,11 +135,13 @@
                                 <i class="fas fa-users mr-3"></i>
                                 Pembabatan
                             </a>
-                            <a class="{{ request()->routeIs('user*') ? 'sidebar-active' : '' }} flex items-center rounded-md px-4 py-2 text-white hover:bg-green-700"
-                                href="{{ route('user.index') }}">
-                                <i class="fas fa-images mr-3"></i>
-                                User
-                            </a>
+                            @role('admin')
+                                <a class="{{ request()->routeIs('user*') ? 'sidebar-active' : '' }} flex items-center rounded-md px-4 py-2 text-white hover:bg-green-700"
+                                    href="{{ route('user.index') }}">
+                                    <i class="fas fa-images mr-3"></i>
+                                    User
+                                </a>
+                            @endrole
                         </nav>
                     </div>
                     <div class="border-t border-green-700 p-4">
@@ -145,7 +149,7 @@
                             <div class="ml-3">
                                 <p class="text-sm font-medium text-white">{{ auth()->user()->name }}</p>
                                 <div class="flex items-center">
-                                    <form method="POST" action="#">
+                                    <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button class="text-xs text-green-300 hover:text-white"
                                             type="submit">Logout</button>

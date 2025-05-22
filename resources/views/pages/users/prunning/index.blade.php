@@ -53,14 +53,15 @@
                 </label>
             </form>
             <div class="flex flex-col gap-3 sm:flex-row">
-                <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    href="{{ route('prunning.create') }}">
-                    <i class="fas fa-plus mr-2"></i> Tambah Pembabatan
-                </a>
+                @role('admin|krani')
+                    <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        href="{{ route('prunning.create') }}">
+                        <i class="fas fa-plus mr-2"></i> Tambah Pembabatan
+                    </a>
+                @endrole
                 <div class="dropdown relative">
-                    <a href="{{ route('prunning.export') }}"
-                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        id="exportDropdown">
+                    <a class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                        id="exportDropdown" href="{{ route('prunning.export') }}">
                         <i class="fa-solid fa-file-csv mr-2"></i> Export
                     </a>
                 </div>
@@ -137,29 +138,32 @@
                                 {{ $prunning->user->name }}
                             </td>
                             <td class="whitespace-nowrap text-right text-sm font-medium">
-                                <div class="relative inline-block text-left">
-                                    <button class="px-6 py-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-                                        id="actionBtn{{ $prunning->id }}" onclick="dropdownActions('{{ $prunning->id }}')">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
-                                        id="actionMenu{{ $prunning->id }}">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="{{ route('prunning.edit', ['prunning' => $prunning->id]) }}">
-                                            <i class="fas fa-edit mr-2"></i> Edit
-                                        </a>
-                                        <form action="{{ route('prunning.destroy', ['prunning' => $prunning->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button
-                                                class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
-                                                type="submit">
-                                                <i class="fas fa-trash-alt mr-2"></i> Delete
-                                            </button>
-                                        </form>
+                                @role('admin|krani')
+                                    <div class="relative inline-block text-left">
+                                        <button class="px-6 py-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                            id="actionBtn{{ $prunning->id }}"
+                                            onclick="dropdownActions('{{ $prunning->id }}')">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
+                                            id="actionMenu{{ $prunning->id }}">
+                                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                href="{{ route('prunning.edit', ['prunning' => $prunning->id]) }}">
+                                                <i class="fas fa-edit mr-2"></i> Edit
+                                            </a>
+                                            <form action="{{ route('prunning.destroy', ['prunning' => $prunning->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    class="block w-full px-4 py-2 text-start text-sm text-red-600 hover:bg-gray-100"
+                                                    type="submit">
+                                                    <i class="fas fa-trash-alt mr-2"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+                                @endrole
                             </td>
                         </tr>
                     @endforeach
@@ -203,11 +207,11 @@
             document.getElementById('confirmDeleteBtn').setAttribute('data-id', id);
         }
 
-        document.getElementById('cancelDeleteBtn').addEventListener('click', function () {
+        document.getElementById('cancelDeleteBtn').addEventListener('click', function() {
             document.getElementById('deleteModal').classList.add('hidden');
         });
 
-        document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
             var id = this.getAttribute('data-id');
             // Here you would normally make an AJAX request to delete the product
             alert('Product ' + id + ' would be deleted');
