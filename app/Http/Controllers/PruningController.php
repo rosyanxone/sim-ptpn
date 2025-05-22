@@ -12,7 +12,17 @@ class PruningController extends Controller
      */
     public function index()
     {
-        return view('pages.users.prunning.index');
+        $prunnings = Pruning::orderBy(request()->get('sortBy') ?? 'spraying_date')
+            ->whereHas('land', function ($q) {
+                if (request()->get('search')) {
+                    $q->where('land_area', 'LIKE', '%' . request()->get('search') . '%')
+                        ->orWhere('land_location', 'LIKE', '%' . request()->get('search') . '%');
+                }
+            })->paginate(10);
+
+        return view('pages.users.prunning.index', [
+            'prunnings' => $prunnings,
+        ]);
     }
 
     /**
