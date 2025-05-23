@@ -22,8 +22,8 @@ class SprayingExport implements FromQuery, WithHeadings, WithMapping, WithStyles
     {
         return [
             'ID',
-            'Area Tanah',
-            'Lokasi Tanah',
+            'Area Lahan',
+            'Lokasi Lahan',
             'Tahun Tanam',
             'Jenis Pestisida',
             'Jumlah Penyemprotan',

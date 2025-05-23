@@ -22,8 +22,8 @@ class PruningExport implements FromQuery, WithHeadings, WithMapping, WithStyles,
     {
         return [
             'ID',
-            'Area Tanah',
-            'Lokasi Tanah',
+            'Area Lahan',
+            'Lokasi Lahan',
             'Area Pembabatan',
             'Tahun Tanam',
             'Luas Pembabatan',

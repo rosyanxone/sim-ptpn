@@ -16,13 +16,13 @@
             @csrf
             <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
                 <div class="md:col-span-2">
-                    <h3 class="text-lg font-medium text-gray-900">Informasi Tanah</h3>
+                    <h3 class="text-lg font-medium text-gray-900">Informasi Lahan</h3>
                 </div>
 
                 <div class="col-span-1 grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
-                    <!-- Area Tanah -->
+                    <!-- Area Lahan -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700" for="land-area">Area Tanah <span
+                        <label class="mb-1 block text-sm font-medium text-gray-700" for="land-area">Area Lahan <span
                                 class="text-red-600">*</span></label>
                         <input
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -32,14 +32,21 @@
                         @enderror
                     </div>
 
-                    <!-- Lokasi Tanah -->
+                    <!-- Lokasi Lahan -->
                     <div>
                         <label class="mb-1 block text-sm font-medium text-gray-700" for="land-location">
-                            Lokasi Tanah <span class="text-red-600">*</span>
+                            Lokasi Lahan <span class="text-red-600">*</span>
                         </label>
-                        <input
+                        <select
                             class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            id="land-location" name="land_location" type="text" required>
+                            id="land-location" name="land_location" required>
+                            <option value="" selected disabled>Pilih lokasi lahan...</option>
+                            <option value="Afdeling 1">Afdeling 1</option>
+                            <option value="Afdeling 2">Afdeling 2</option>
+                            <option value="Afdeling 3">Afdeling 3</option>
+                            <option value="Afdeling 4">Afdeling 4</option>
+                            <option value="Afdeling 5">Afdeling 5</option>
+                        </select>
                         @error('land_location')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

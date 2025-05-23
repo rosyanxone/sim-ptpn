@@ -22,8 +22,8 @@ class FertilizationExport implements FromQuery, WithHeadings, WithMapping, WithS
     {
         return [
             'ID',
-            'Area Tanah',
-            'Lokasi Tanah',
+            'Area Lahan',
+            'Lokasi Lahan',
             'Tahun Tanam',
             'Jenis Pupuk',
             'Jumlah Pemupukan',
