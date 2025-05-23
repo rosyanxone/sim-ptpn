@@ -7,7 +7,7 @@
         <div class="container mx-auto my-auto px-4">
             <div class="mx-auto max-w-md overflow-hidden rounded-lg shadow-lg">
                 <div class="bg-green-700 px-6 py-4">
-                    <h2 class="text-center text-2xl font-bold text-white">Login ke PalmEco</h2>
+                    <h2 class="text-center text-2xl font-bold text-white">Login ke SIM PTPN</h2>
                 </div>
 
                 <div class="p-6">
