@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Image Icon -->
-    <link rel="shortcut icon" href="{{ asset('./images/logo.jpeg') }}" type="image/x-icon">
+    <link type="image/x-icon" href="{{ asset('./images/logo.jpeg') }}" rel="shortcut icon">
     <style>
         .hero-section {
             background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1591315685611-fb7ece8c9b81?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
@@ -22,8 +22,9 @@
 
 <body class="bg-gray-50 text-gray-800">
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto flex items-center justify-between px-4 py-4">
+    <header class="relative bg-white">
+        <div
+            class="fixed top-0 mx-auto flex w-full items-center justify-between border-b border-gray-100 bg-white px-4 py-4 shadow">
             <div class="flex items-center">
                 <img class="h-10 w-auto" src="{{ asset('./images/logo.jpeg') }}" alt="Logo">
                 <a class="ml-3 text-xl font-bold text-green-800" href="{{ route('home') }}">PTPN IV Regional 5</a>
@@ -54,7 +55,7 @@
     </header>
 
     <!-- Main Content -->
-    <main>
+    <main class="mt-[75px]">
         @yield('content')
     </main>
 
@@ -87,7 +88,8 @@
                     <ul class="space-y-2">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
-                            <span>Jl. Slt. Abdurrahman No.11, Sungai Bangkong, Kec. Pontianak Kota, Kota Pontianak, Kalimantan Barat 78113</span>
+                            <span>Jl. Slt. Abdurrahman No.11, Sungai Bangkong, Kec. Pontianak Kota, Kota Pontianak,
+                                Kalimantan Barat 78113</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-phone-alt mr-2"></i>
