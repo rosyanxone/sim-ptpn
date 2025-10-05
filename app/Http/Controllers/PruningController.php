@@ -42,6 +42,15 @@ class PruningController extends Controller
      */
     public function store(Request $request)
     {
+        $landExists = Pruning::whereHas('land', function ($q) use ($request) {
+            $q->where('land_area', $request->get('land_area'));
+        })->exists();
+
+        if ($landExists) {
+            session()->flash('error', 'Nama lahan sudah ada.');
+            return redirect()->route('prunning.create');
+        }
+
         DB::beginTransaction();
         try {
             $land = Land::create($request->only(['land_area', 'land_location', 'planting_year']));

@@ -62,6 +62,15 @@ class FertilizationController extends Controller
      */
     public function store(StoreFertilizationRequest $request)
     {
+        $landExists = Fertilization::whereHas('land', function ($q) use ($request) {
+            $q->where('land_area', $request->get('land_area'));
+        })->exists();
+
+        if ($landExists) {
+            session()->flash('error', 'Nama lahan sudah ada.');
+            return redirect()->route('fertilization.create');
+        }
+
         DB::beginTransaction();
         try {
             $land = Land::create($request->only(['land_area', 'land_location', 'planting_year']));

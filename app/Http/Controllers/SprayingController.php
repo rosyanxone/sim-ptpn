@@ -50,6 +50,15 @@ class SprayingController extends Controller
      */
     public function store(StoreSprayingRequest $request)
     {
+        $landExists = Spraying::whereHas('land', function ($q) use ($request) {
+            $q->where('land_area', $request->get('land_area'));
+        })->exists();
+
+        if ($landExists) {
+            session()->flash('error', 'Nama lahan sudah ada.');
+            return redirect()->route('spraying.create');
+        }
+
         DB::beginTransaction();
         try {
             $land = Land::create($request->only(['land_area', 'land_location', 'planting_year']));

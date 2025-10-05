@@ -25,6 +25,8 @@
 </head>
 
 <body class="bg-gray-100">
+    @include('components.error-popup')
+
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <div class="hidden md:flex md:flex-shrink-0">
